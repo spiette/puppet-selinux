@@ -93,8 +93,6 @@ define selinux::module(
 
       file { $this_module_dir:
         ensure  => directory,
-        source  => $sourcedir,
-        recurse => remote,
       }
 
       file { "${this_module_dir}/${name}.te":
