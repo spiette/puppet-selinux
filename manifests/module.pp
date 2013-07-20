@@ -95,6 +95,7 @@ define selinux::module(
         ensure  => directory,
         source  => $sourcedir,
         recurse => remote,
+        ignore  => '.svn',
       }
 
       file { "${this_module_dir}/${name}.te":
