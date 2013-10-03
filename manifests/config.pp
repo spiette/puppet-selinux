@@ -36,6 +36,7 @@ class selinux::config(
 
   $current_mode = $::selinux? {
     'false' => 'disabled',
+    ''      => 'disabled',
     default => $::selinux_current_mode
   }
   # we don't always run setenforce
