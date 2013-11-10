@@ -47,7 +47,7 @@ class { 'selinux':
 
 - *mode*
 
-   (enforced|permissive|disabled)
+   (enforcing|permissive|disabled)
    sets the operating state for SELinux.
 
 - *installmake*
