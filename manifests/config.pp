@@ -16,7 +16,8 @@
 #  This module should not be called directly.
 #
 class selinux::config(
-  $mode
+  $mode,
+  $quiet_reboot_notify,
 ) {
   Exec {
     path => '/bin:/sbin:/usr/bin:/usr/sbin',
@@ -52,8 +53,13 @@ class selinux::config(
       'disabled': {
         # we can't apply right now disabled, but we can set it to permissive
         $change = "from ${current_mode} to ${real_mode}"
-        notify { 'change':
-          message => "A reboot is required to change ${change}"
+        if $quiet_reboot_notify {
+          notice("A reboot is required to change ${change}")
+        }
+        else {
+          notify { 'change':
+            message => "A reboot is required to change ${change}"
+          }
         }
         if $current_mode == 'enforcing' {
           exec { 'setenforce permissive':
@@ -65,8 +71,13 @@ class selinux::config(
         if $current_mode == 'disabled' {
           # we can't set disabled now, it needs a reboot.
           $change = "from ${current_mode} to ${real_mode}"
-          notify { 'change':
-            message => "A reboot is required to change ${change}"
+          if $quiet_reboot_notify {
+            notice("A reboot is required to change ${change}")
+          }
+          else {
+            notify { 'change':
+              message => "A reboot is required to change ${change}"
+            }
           }
         } else {
           # we're going from permissive to enforcing or vice-versa
