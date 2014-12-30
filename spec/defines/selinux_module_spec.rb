@@ -20,7 +20,8 @@ describe 'selinux::module', :type => :define do
     }}
     let(:facts) { {
         :osfamily      => 'RedHat',
-        :operatingsystemrelease => '6.4'
+        :operatingsystemrelease => '6.4',
+        :operatingsystemmajrelease => '6',
     } }
 
     it { should create_class('selinux') }
@@ -62,8 +63,8 @@ describe 'selinux::module', :type => :define do
         :onlyif  => "test -f #{active_modules}/#{modname}.pp.disabled"
       ) }
   end
-  [ '4.5', '5.8', '6.4', '7.0', '19' ].each do | osrelease |
-    describe "checking package installation: #{osrelease}" do
+  [ '4', '5', '6', '7', '19' ].each do | osmajrelease |
+    describe "checking package installation: #{osmajrelease}" do
       modname = 'rsynclocal'
       source = "puppet:///modules/selinux/#{modname}"
       modules_dir = '/var/lib/puppet/selinux'
@@ -74,9 +75,9 @@ describe 'selinux::module', :type => :define do
       }}
       let(:facts) { {
           :osfamily      => 'RedHat',
-          :operatingsystemrelease => osrelease,
+          :operatingsystemmajrelease => osmajrelease,
       } }
-      if osrelease.to_f < 7
+      if osmajrelease.to_i < 7
         it { should create_package('selinux-policy') }
       else
         it { should create_package('selinux-policy-devel') }
