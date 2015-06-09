@@ -9,7 +9,7 @@
 # }
 #
 class selinux::params (
-  $modules_dir = "${::settings::vardir}/selinux"
+  $modules_dir = "${::puppet_vardir}/selinux"
   ) {
   case $::osfamily {
     'RedHat': {
