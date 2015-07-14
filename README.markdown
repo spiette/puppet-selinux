@@ -40,7 +40,8 @@ include selinux
 
 <pre>
 class { 'selinux':
-  mode => 'permissive'
+  mode   => 'permissive',
+  policy => 'targeted'
 }
 </pre>
 ### Parameters:
@@ -49,6 +50,11 @@ class { 'selinux':
 
    (enforced|permissive|disabled)
    sets the operating state for SELinux.
+
+- *policy*
+
+  (targeted|minimum|mls)
+  sets the policy for SELinux.
 
 - *installmake*
 
