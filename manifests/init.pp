@@ -7,6 +7,10 @@
 #    (enforcing|permissive|disabled)
 #    sets the operating state for SELinux.
 #
+#  [*policy*]
+#    (targeted|minimum|mls)
+#    sets the policy for SELinux.
+#
 #  [*installmake*]
 #    make is required to install modules. If you have the make package declared
 #    elsewhere, you want to set this to false. It defaults to true.
@@ -20,6 +24,7 @@
 #
 class selinux(
   $mode         = 'enforcing',
+  $policy       = 'targeted',
   $installmake  = true,
   ) {
   include selinux::params
@@ -32,6 +37,7 @@ class selinux(
   }
 
   class { 'selinux::config':
-      mode => $mode,
+      mode   => $mode,
+      policy => $policy
   }
 }

@@ -6,6 +6,9 @@
 #  [*mode*]
 #   (enforcing|permissive|disabled) - sets the operating state for SELinux.
 #
+#  [*policy*]
+#    (targeted|minimum|mls) - sets the policy for SELinux.
+#
 # === Actions:
 #  Configures SELinux to a specific state (enforcing|permissive|disabled)
 #
@@ -16,7 +19,8 @@
 #  This module should not be called directly.
 #
 class selinux::config(
-  $mode
+  $mode,
+  $policy
 ) {
   Exec {
     path => '/bin:/sbin:/usr/bin:/usr/sbin',
