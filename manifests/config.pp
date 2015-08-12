@@ -34,10 +34,12 @@ class selinux::config(
     content => template('selinux/sysconfig_selinux.erb')
   }
 
-  $current_mode = $::selinux? {
+  $current_mode = $::selinux ? {
+    # lint:ignore:quoted_booleans
     'false' => 'disabled',
     false   => 'disabled',
     default => $::selinux_current_mode,
+    # lint:endignore
   }
 
   $real_mode = $mode ? {
