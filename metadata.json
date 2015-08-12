@@ -1,0 +1,26 @@
+{
+  "name": "spiette-selinux",
+  "version": "0.6.0",
+  "author": "spiette",
+  "summary": "This class manages SELinux on RHEL based systems.",
+  "license": "Apache-2.0",
+  "source": "http://github.com/spiette/puppet-selinux",
+  "project_page": "http://github.com/spiette/puppet-selinux",
+  "issues_url": "https://github.com/spiette/puppet-selinux/issues",
+  "description": "This class manages SELinux on RHEL based systems.",
+  "dependencies": [
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "6.2",
+        "6.3",
+        "6.4",
+        "6.5",
+        "7.0",
+        "7.1"
+      ]
+    }
+  ]
+}
