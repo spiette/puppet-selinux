@@ -1,4 +1,7 @@
 *.sw?
-pkg
+pkg/
 spec/fixtures
 .*~
+log/
+.bundle
+Gemfile.lock

@@ -141,6 +141,7 @@ describe 'selinux::module', :type => :define do
   # source
   [
     nil,
+    'gopher://github.com/selinux/modules',
     'https://github.com/modules/selinux/mod.te',
     'puppet:///modules/selinux/mod.te',
     'puppet:///modules/selinux/',
@@ -167,7 +168,7 @@ describe 'selinux::module', :type => :define do
       end
       let(:facts) {{
           :osfamily      => 'RedHat',
-          :operatingsystemrelease => '6.4',
+          :operatingsystemrelease => '6.5',
       }}
       case source
       when nil
@@ -175,8 +176,8 @@ describe 'selinux::module', :type => :define do
         it { should create_file(modules_dir + "/#{modname}/#{modname}.te")\
         .with_source("puppet:///modules/selinux/#{modname}/#{modname}.te") }
       when /^puppet:.*\.te$/
-        # invalid source: we want' a directory
-        it { expect { should include_class('selinux::install') }.to\
+        # invalid source: we want a directory
+        it { expect { should contain_selinux__module(modname) }.to\
             raise_error(Puppet::Error,
                         /Invalid source parameter, expecting a directory/) }
       when /^puppet:\/\/\/modules\/\w+\/\w+/ , /^file:\/\/\/.*$/
@@ -184,9 +185,10 @@ describe 'selinux::module', :type => :define do
         it { should create_file(modules_dir + "/#{modname}/#{modname}.te")\
         .with_source(source + "/#{modname}.te") }
       else
-        it { expect { should include_class('selinux::install') }.to\
+        it { expect { should contain_selinux__module(modname) }.to\
             raise_error(Puppet::Error, /Invalid source parameter/) }
       end
     end
   end
 end
+at_exit { RSpec::Puppet::Coverage.report! }

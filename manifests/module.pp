@@ -20,8 +20,8 @@
 #   [*ignore*]
 #     If you want to exclude files of your selinux module to be transferred to
 #     the node (.svn directories for example), you can add a string to exclude
-#     or a list of pattern, eg. [ 'CVS', '.svn' ]. Defaults to nothing: all files
-#     will be copied.
+#     or a list of pattern, eg. [ 'CVS', '.svn' ]. Defaults to nothing: all
+#     files will be copied.
 #
 # ===  Example
 #
