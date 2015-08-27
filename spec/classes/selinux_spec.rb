@@ -13,12 +13,14 @@ describe 'selinux' do
           let(:facts) { {
               :osfamily               => 'RedHat',
               :operatingsystemrelease => '6.4',
+              :operatingsystemmajrelease => '6',
               :selinux_current_mode   => current_mode,
           } }
         when 'disabled'
           let(:facts) { {
               :osfamily               => 'RedHat',
               :operatingsystemrelease => '6.4',
+              :operatingsystemmajrelease => '6',
               :selinux                => 'false',
           } }
         end
