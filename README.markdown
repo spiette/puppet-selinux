@@ -55,6 +55,11 @@ class { 'selinux':
    make is required to install modules. If you have the make package declared
    elsewhere, you want to set this to false. It defaults to true.
 
+- *quiet_reboot_notify*
+  
+  In the case of going from {enabled|permissive} -> disabled or back, suppress
+  the notify resource and write notification to the log instead.
+
 ## selinux::module
 <pre>
 selinux::module { 'rsynclocal':

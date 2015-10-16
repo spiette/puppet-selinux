@@ -7,7 +7,6 @@ describe 'selinux' do
   modes.each do |current_mode|
     modes.each do |param_mode|
       describe "going from #{current_mode} to #{param_mode}" do 
-        let(:params) {{ :mode => param_mode }}
         case current_mode
         when 'enforcing', 'permissive'
           let(:facts) { {
@@ -22,6 +21,7 @@ describe 'selinux' do
               :selinux                => 'false',
           } }
         end
+        let(:params) {{ :mode => param_mode }}
 
         it { should create_class('selinux') }
         it { should create_class('selinux::params') }
@@ -37,6 +37,35 @@ describe 'selinux' do
           else
             it { should create_notify('change')\
               .with_message(/A reboot is required to change/) }
+            it { should_not create_exec("setenforce #{param_mode}") }
+            if current_mode == 'enforcing' and param_mode == 'disabled'
+              it { should create_exec('setenforce permissive') }
+            end
+          end
+        end
+      end
+      describe "going from #{current_mode} to #{param_mode} with $quiet_reboot_notify=true" do 
+        case current_mode
+        when 'enforcing', 'permissive'
+          let(:facts) { {
+              :osfamily               => 'RedHat',
+              :operatingsystemrelease => '6.4',
+              :selinux_current_mode   => current_mode,
+          } }
+        when 'disabled'
+          let(:facts) { {
+              :osfamily               => 'RedHat',
+              :operatingsystemrelease => '6.4',
+              :selinux                => 'false',
+          } }
+        end
+        let(:params) {{ :mode => param_mode, :quiet_reboot_notify => true }}
+        if current_mode != param_mode
+          if  current_mode != 'disabled'  and  param_mode != 'disabled' 
+            it { should create_exec("setenforce #{param_mode}")\
+            .with_command("setenforce #{param_mode}") }
+          else
+            it { should have_notify_count(0) }
             it { should_not create_exec("setenforce #{param_mode}") }
             if current_mode == 'enforcing' and param_mode == 'disabled'
               it { should create_exec('setenforce permissive') }

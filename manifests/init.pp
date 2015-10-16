@@ -19,8 +19,9 @@
 #  include selinux
 #
 class selinux(
-  $mode         = 'enforcing',
-  $installmake  = true,
+  $mode                = 'enforcing',
+  $installmake         = true,
+  $quiet_reboot_notify = false,
   ) {
   include selinux::params
 
@@ -32,6 +33,7 @@ class selinux(
   }
 
   class { 'selinux::config':
-      mode => $mode,
+      mode                => $mode,
+      quiet_reboot_notify => $quiet_reboot_notify,
   }
 }
