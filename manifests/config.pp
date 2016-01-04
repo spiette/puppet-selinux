@@ -35,8 +35,11 @@ class selinux::config(
   }
 
   $current_mode = $::selinux? {
-    'false' => 'disabled',
-    default => $::selinux_current_mode
+    # lint:ignore:quoted_booleans
+    false => 'disabled',
+    false   => 'disabled',
+    default => $::selinux_current_mode,
+    # lint:endignore
   }
   # we don't always run setenforce
   if $current_mode != $mode {
