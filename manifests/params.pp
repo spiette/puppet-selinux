@@ -13,12 +13,11 @@ class selinux::params (
   ) {
   case $::osfamily {
     'RedHat': {
-#      TODO work out why this fails for centos 7
-#      if $::operatingsystemrelease < '7' {
-#        $selinux_policy_devel = 'selinux-policy'
-#      } else {
+      if $::operatingsystemmajrelease < '7' {
+        $selinux_policy_devel = 'selinux-policy'
+      } else {
         $selinux_policy_devel = 'selinux-policy-devel'
-#      }
+      }
     }
     default: {
         fail('Unsupported OS')
