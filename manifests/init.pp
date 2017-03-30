@@ -23,6 +23,7 @@ class selinux(
   $installmake  = true,
   ) {
   include selinux::params
+  include selinux::install
 
   file { $selinux::params::modules_dir:
     ensure => directory,
